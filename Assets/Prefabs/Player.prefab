@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -416172185812989836}
   - component: {fileID: 1451993881973167190}
   - component: {fileID: 5321760081971604493}
-  - component: {fileID: 2929439977407197444}
   - component: {fileID: 4904554675489355309}
-  - component: {fileID: 22850901299449121}
+  - component: {fileID: 3659513429282781807}
+  - component: {fileID: 2442886645360866114}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -123,20 +123,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2929439977407197444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733159915959613223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08c7cf092b894842bb53d182d17ed7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!95 &4904554675489355309
 Animator:
   serializedVersion: 3
@@ -156,7 +142,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &22850901299449121
+--- !u!114 &3659513429282781807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733159915959613223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08c7cf092b894842bb53d182d17ed7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &2442886645360866114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5069bd009f1f546a2293589fa84934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   moveThreshold: 0.5
   smoothFactor: 0.15
   rotationSpeed: 2

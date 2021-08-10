@@ -6,7 +6,7 @@ namespace RTS.Movement
 {
     [RequireComponent (typeof (NavMeshAgent))]
     [RequireComponent (typeof (Animator))]
-    public class CharacterLocomotion : MonoBehaviour
+    public class CharacterLocomotion : NetworkBehaviour
     {
         [SerializeField] private float moveThreshold = 0.5f;
         [SerializeField] private float smoothFactor = 0.15f;
@@ -20,8 +20,8 @@ namespace RTS.Movement
         private Vector3 _worldDeltaPosition;
         private Vector2 _deltaPosition;
         private Vector2 _smoothDeltaPosition = Vector2.zero;
-        private Vector2 _velocity = Vector2.zero;
-        private bool _shouldMove;
+        [SyncVar] private Vector2 _velocity = Vector2.zero;
+        [SyncVar] private bool _shouldMove;
         private bool _shouldRotate;
         private Vector3 _lookAt;
 
@@ -61,32 +61,35 @@ namespace RTS.Movement
                 _agent.isStopped = true;
                 return;
             }
-            
-            UpdatePositionDeltas();
 
-            UpdateVelocity();
-
-            _shouldMove = !_agent.isStopped && _velocity.sqrMagnitude > _sqrMoveThreshold && _agent.remainingDistance > _agent.radius;
-            // TODO: Update animator to have a base Move state and attacks are overrides
-            // TODO: Remove the animator check here and disable the agent when IsAttacking==true instead
-            _shouldMove = _shouldMove && !_animator.GetBool(IsAttacking);
-
-            if (_shouldMove)
+            if (isServer)  // TODO: Extract to a ServerUpdate method
             {
-                _lookAt = _agent.steeringTarget;
-            }
+                UpdatePositionDeltas();
 
-            // Rotate agent
-            RotateToward(_lookAt);
-
-            // if (_characterLookAt)
-            //     _characterLookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
+                UpdateVelocity();
             
-            // Pull character towards agent
-            if (_worldDeltaPosition.sqrMagnitude > _sqrAgentRadius)
-            {
-                transform.position = _agent.nextPosition - 0.9f * _worldDeltaPosition;
-                _shouldMove = true;
+                _shouldMove = !_agent.isStopped && _velocity.sqrMagnitude > _sqrMoveThreshold && _agent.remainingDistance > _agent.radius;
+                // TODO: Update animator to have a base Move state and attacks are overrides
+                // TODO: Remove the animator check here and disable the agent when IsAttacking==true instead
+                _shouldMove = _shouldMove && !_animator.GetBool(IsAttacking);
+
+                if (_shouldMove)
+                {
+                    _lookAt = _agent.steeringTarget;
+                }
+
+                // Rotate agent
+                RotateToward(_lookAt);
+
+                // if (_characterLookAt)
+                //     _characterLookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
+                
+                // Pull character towards agent
+                if (_worldDeltaPosition.sqrMagnitude > _sqrAgentRadius)
+                {
+                    transform.position = _agent.nextPosition - 0.9f * _worldDeltaPosition;
+                    _shouldMove = true;
+                }
             }
 
             // Update animation parameters
@@ -120,13 +123,16 @@ namespace RTS.Movement
 
         private void OnAnimatorMove ()
         {
-            // Update position to agent position
-            transform.position = _agent.nextPosition;
-            
-            // Update position based on animation movement using navigation surface height
-            // var position = _animator.rootPosition;
-            // position.y = _agent.nextPosition.y;
-            // transform.position = position;
+            if (isServer)
+            {
+                // Update position to agent position
+                transform.position = _agent.nextPosition;
+                
+                // Update position based on animation movement using navigation surface height
+                // var position = _animator.rootPosition;
+                // position.y = _agent.nextPosition.y;
+                // transform.position = position;
+            }
         }
 
         public void SetRotationToward(Vector3 point)
