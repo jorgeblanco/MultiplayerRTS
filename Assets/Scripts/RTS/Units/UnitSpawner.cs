@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace RTS
+namespace RTS.Units
 {
     public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     {
