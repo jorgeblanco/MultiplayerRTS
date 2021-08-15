@@ -1,5 +1,6 @@
 using System;
 using Mirror;
+using RTS.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,10 +17,12 @@ namespace RTS.Units
         public static event Action<UnitController> AuthorityOnUnitDespawned;
         
         public UnitMovement UnitMovement { get; private set; } = null;
+        public Targeter Targeter { get; private set; } = null;
 
         private void Awake()
         {
             UnitMovement = GetComponent<UnitMovement>();
+            Targeter = GetComponent<Targeter>();
         }
 
         #region Server

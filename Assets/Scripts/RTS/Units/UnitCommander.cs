@@ -1,3 +1,4 @@
+using RTS.Combat;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,17 @@ namespace RTS.Units
             var ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, layerMask)) return;
 
+            if (hit.collider.TryGetComponent<Targetable>(out var targetable))
+            {
+                if (targetable.hasAuthority)
+                {
+                    TryMove(hit.point);
+                    return;
+                }
+
+                TryTarget(targetable);
+                return;
+            }
             TryMove(hit.point);
         }
 
@@ -28,7 +40,17 @@ namespace RTS.Units
         {
             foreach (var unitController in selectionHandler.SelectedUnits)
             {
+                if (unitController.UnitMovement == null) return;
                 unitController.UnitMovement.CmdMove(point);
+            }
+        }
+
+        private void TryTarget(Targetable target)
+        {
+            foreach (var unitController in selectionHandler.SelectedUnits)
+            {
+                if (unitController.Targeter == null) return;
+                unitController.Targeter.CmdSetTarget(target.gameObject);
             }
         }
     }
