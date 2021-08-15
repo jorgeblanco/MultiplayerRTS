@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,11 @@ namespace RTS.Units
         [SerializeField] private UnityEvent onSelected = null;
         [SerializeField] private UnityEvent onDeselected = null;
 
+        public static event Action<UnitController> ServerOnUnitSpawned;
+        public static event Action<UnitController> ServerOnUnitDespawned;
+        public static event Action<UnitController> AuthorityOnUnitSpawned;
+        public static event Action<UnitController> AuthorityOnUnitDespawned;
+        
         public UnitMovement UnitMovement { get; private set; } = null;
 
         private void Awake()
@@ -18,10 +24,34 @@ namespace RTS.Units
 
         #region Server
 
-        
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            ServerOnUnitSpawned?.Invoke(this);
+        }
+
+        public override void OnStopServer()
+        {
+            base.OnStopServer();
+            ServerOnUnitDespawned?.Invoke(this);
+        }
 
         #endregion
         #region Client
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            if (!hasAuthority || !isClientOnly) return;
+            AuthorityOnUnitSpawned?.Invoke(this);
+        }
+
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+            if (!hasAuthority || !isClientOnly) return;
+            AuthorityOnUnitDespawned?.Invoke(this);
+        }
 
         [Client]
         public void Select()
