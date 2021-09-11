@@ -1,4 +1,5 @@
 using Mirror;
+using RTS.Combat;
 using UnityEngine;
 
 namespace RTS.Movement
@@ -8,6 +9,7 @@ namespace RTS.Movement
     {
         [SerializeField] private float launchForce = 10f;
         [SerializeField] private float timeToLive = 5f;
+        [SerializeField] private int damageToDeal = 20;
         
         private Rigidbody _rigidbody;
 
@@ -21,6 +23,18 @@ namespace RTS.Movement
         {
             base.OnStartServer();
             Invoke(nameof(DestroySelf), timeToLive);
+        }
+
+        [ServerCallback]
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<NetworkIdentity>(out var networkIdentity)
+                && networkIdentity.connectionToClient == connectionToClient) return;
+            if (other.TryGetComponent<Health>(out var health))
+            {
+                health.DealDamage(damageToDeal);
+            }
+            DestroySelf();
         }
 
         private void DestroySelf()

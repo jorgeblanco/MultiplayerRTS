@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3146315802376141941}
   - component: {fileID: 1481599069398840177}
   - component: {fileID: 887337974831554799}
+  - component: {fileID: 8865906449978264428}
   m_Layer: 0
   m_Name: AncientWarrior
   m_TagString: Untagged
@@ -288,6 +289,21 @@ MonoBehaviour:
   fireRange: 5
   fireRate: 1
   rotateSpeed: 20
+--- !u!114 &8865906449978264428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733159915959613223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6103428f1e45e4a8576d9ad199351b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  maxHealth: 100
 --- !u!1 &1058398227328968339
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2879899460144572123}
   - component: {fileID: 8598584351100225958}
   - component: {fileID: 8057106304117126978}
+  - component: {fileID: 7035314718574339386}
   m_Layer: 0
   m_Name: AncientWarriorSpawner
   m_TagString: Untagged
@@ -98,6 +99,21 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   aimOffset: {fileID: 427826103056599626}
+--- !u!114 &7035314718574339386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2949108631995807833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6103428f1e45e4a8576d9ad199351b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  maxHealth: 100
 --- !u!1 &4568369265055363142
 GameObject:
   m_ObjectHideFlags: 0
