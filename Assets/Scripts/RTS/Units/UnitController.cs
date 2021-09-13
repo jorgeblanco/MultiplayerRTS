@@ -42,17 +42,16 @@ namespace RTS.Units
         #endregion
         #region Client
 
-        public override void OnStartClient()
+        public override void OnStartAuthority()
         {
-            base.OnStartClient();
-            if (!hasAuthority || !isClientOnly) return;
+            base.OnStartAuthority();
             AuthorityOnUnitSpawned?.Invoke(this);
         }
 
         public override void OnStopClient()
         {
             base.OnStopClient();
-            if (!hasAuthority || !isClientOnly) return;
+            if (!hasAuthority) return;
             AuthorityOnUnitDespawned?.Invoke(this);
         }
 

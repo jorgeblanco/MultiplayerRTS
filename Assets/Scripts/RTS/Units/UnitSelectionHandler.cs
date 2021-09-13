@@ -22,6 +22,12 @@ namespace RTS.Units
         {
             _mainCamera = Camera.main;
             // _playerData = NetworkClient.connection.identity.GetComponent<NetworkedPlayerData>();
+            UnitController.AuthorityOnUnitDespawned += AuthorityHandleUnitDespawned;
+        }
+
+        private void OnDestroy()
+        {
+            UnitController.AuthorityOnUnitDespawned -= AuthorityHandleUnitDespawned;
         }
 
         private void Update()
@@ -110,6 +116,11 @@ namespace RTS.Units
             {
                unit.Select();
             }
+        }
+
+        private void AuthorityHandleUnitDespawned(UnitController unitController)
+        {
+            SelectedUnits.Remove(unitController);
         }
     }
 }

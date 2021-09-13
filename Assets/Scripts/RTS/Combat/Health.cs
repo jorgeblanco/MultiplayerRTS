@@ -32,7 +32,6 @@ namespace RTS.Combat
             if (_currentHealth > 0) return;
             
             ServerOnDie?.Invoke();
-            Debug.Log($"Unit died: {gameObject.name}");
         }
 
         #endregion
