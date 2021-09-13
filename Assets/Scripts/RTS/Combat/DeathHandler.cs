@@ -21,7 +21,7 @@ namespace RTS.Combat
             _health.ServerOnDie -= ServerHandleDeath;
         }
 
-        private void ServerHandleDeath()
+        protected virtual void ServerHandleDeath()
         {
             NetworkServer.Destroy(gameObject);
         }
