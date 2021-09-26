@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mirror;
 using RTS.Units;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace RTS.GameManagement
 {
     public class GameOverHandler : NetworkBehaviour
     {
+        public static event Action<string> ClientOnGameOver;
+        
         private readonly List<HqController> _hqs = new List<HqController>();
         
         #region Server
@@ -36,15 +39,22 @@ namespace RTS.GameManagement
         {
             _hqs.Remove(hqController);
 
-            if (_hqs.Count > 1) return;
-            Debug.Log("Game Over");
+            if (_hqs.Count != 1) return;
+
+            var winnerId = _hqs[0].connectionToClient.connectionId;
+            RpcGameOver($"Player {winnerId}");
+            Debug.Log($"Game Over. Player {winnerId} won!");
         }
 
         #endregion
 
         #region Client
 
-        
+        [ClientRpc]
+        private void RpcGameOver(string winner)
+        {
+            ClientOnGameOver?.Invoke(winner);
+        }
 
         #endregion
     }
