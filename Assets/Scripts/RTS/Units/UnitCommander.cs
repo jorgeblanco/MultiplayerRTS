@@ -1,4 +1,5 @@
 using RTS.Combat;
+using RTS.GameManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,12 @@ namespace RTS.Units
         private void Awake()
         {
             _mainCamera = Camera.main;
+            GameOverHandler.ClientOnGameOver += ClientHandleGameOver;
+        }
+
+        private void OnDestroy()
+        {
+            GameOverHandler.ClientOnGameOver -= ClientHandleGameOver;
         }
 
         private void Update()
@@ -52,6 +59,11 @@ namespace RTS.Units
                 if (unitController.Targeter == null) return;
                 unitController.Targeter.CmdSetTarget(target.gameObject);
             }
+        }
+
+        private void ClientHandleGameOver(string winner)
+        {
+            enabled = false;
         }
     }
 }

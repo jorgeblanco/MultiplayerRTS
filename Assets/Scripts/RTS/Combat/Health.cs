@@ -20,6 +20,13 @@ namespace RTS.Combat
         {
             base.OnStartServer();
             _currentHealth = maxHealth;
+            HqDeathHandler.ServerOnPlayerDie += ServerHandlePlayerDeath;
+        }
+
+        public override void OnStopServer()
+        {
+            HqDeathHandler.ServerOnPlayerDie -= ServerHandlePlayerDeath;
+            base.OnStopServer();
         }
 
         [Server]
@@ -32,6 +39,14 @@ namespace RTS.Combat
             if (_currentHealth > 0) return;
             
             ServerOnDie?.Invoke();
+        }
+
+        [Server]
+        private void ServerHandlePlayerDeath(int connectionId)
+        {
+            if (connectionId != connectionToClient.connectionId) return;
+            
+            DealDamage(_currentHealth);
         }
 
         #endregion

@@ -8,6 +8,7 @@ namespace RTS.GameManagement
 {
     public class GameOverHandler : NetworkBehaviour
     {
+        public static event Action ServerOnGameOver;
         public static event Action<string> ClientOnGameOver;
         
         private readonly List<HqController> _hqs = new List<HqController>();
@@ -23,9 +24,9 @@ namespace RTS.GameManagement
 
         public override void OnStopServer()
         {
-            base.OnStopServer();
             HqController.ServerOnHqSpawned -= ServerHandleBaseSpawned;
             HqController.ServerOnHqDespawned -= ServerHandleBaseDespawned;
+            base.OnStopServer();
         }
 
         [Server]
@@ -44,6 +45,7 @@ namespace RTS.GameManagement
             var winnerId = _hqs[0].connectionToClient.connectionId;
             RpcGameOver($"Player {winnerId}");
             Debug.Log($"Game Over. Player {winnerId} won!");
+            ServerOnGameOver?.Invoke();
         }
 
         #endregion

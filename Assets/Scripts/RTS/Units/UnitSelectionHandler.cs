@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Mirror;
+using RTS.GameManagement;
 using RTS.Networking;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,11 +24,13 @@ namespace RTS.Units
             _mainCamera = Camera.main;
             // _playerData = NetworkClient.connection.identity.GetComponent<NetworkedPlayerData>();
             UnitController.AuthorityOnUnitDespawned += AuthorityHandleUnitDespawned;
+            GameOverHandler.ClientOnGameOver += ClientHandleGameOver;
         }
 
         private void OnDestroy()
         {
             UnitController.AuthorityOnUnitDespawned -= AuthorityHandleUnitDespawned;
+            GameOverHandler.ClientOnGameOver -= ClientHandleGameOver;
         }
 
         private void Update()
@@ -121,6 +124,11 @@ namespace RTS.Units
         private void AuthorityHandleUnitDespawned(UnitController unitController)
         {
             SelectedUnits.Remove(unitController);
+        }
+
+        private void ClientHandleGameOver(string winner)
+        {
+            enabled = false;
         }
     }
 }

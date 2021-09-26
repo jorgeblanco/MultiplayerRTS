@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 8057106304117126978}
   - component: {fileID: 7035314718574339386}
   - component: {fileID: 5076316045325039044}
-  - component: {fileID: 2206563759603893199}
   - component: {fileID: 5701335005520046821}
+  - component: {fileID: 315780544119162071}
   m_Layer: 0
   m_Name: AncientWarriorSpawner
   m_TagString: Untagged
@@ -132,20 +132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarParent: {fileID: 7032641712957160616}
   healthBarImage: {fileID: 5259131078686405298}
---- !u!114 &2206563759603893199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2949108631995807833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835aeae755ed432db48cfeffd725fbbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &5701335005520046821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +142,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d872eacb814a9a9f3a9e80f79f4498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &315780544119162071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2949108631995807833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e68f637b73641b888ba72b9fa86fe3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0

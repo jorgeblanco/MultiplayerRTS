@@ -1,5 +1,6 @@
 using Mirror;
 using RTS.Combat;
+using RTS.GameManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +23,18 @@ namespace RTS.Units
         }
 
         #region Server
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            GameOverHandler.ServerOnGameOver += ServerHandleGameOver;
+        }
+
+        public override void OnStopServer()
+        {
+            GameOverHandler.ServerOnGameOver -= ServerHandleGameOver;
+            base.OnStopServer();
+        }
 
         [ServerCallback]
         private void Update()
@@ -61,6 +74,12 @@ namespace RTS.Units
                 return;
             }
             _navMeshAgent.SetDestination(hit.position);
+        }
+
+        [Server]
+        private void ServerHandleGameOver()
+        {
+            _navMeshAgent.ResetPath();
         }
         #endregion
 
